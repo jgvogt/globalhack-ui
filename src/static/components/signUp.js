@@ -35,7 +35,7 @@ const styles = theme => ({
     },
     avatar: {
         margin: theme.spacing.unit,
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: "#078b75"
     },
     form: {
         width: '100%',
@@ -204,10 +204,10 @@ static defaultProps = {
                             <Search onSearch={(query) => this.onTagSearch(query, "language")} searchType="language" searchName="Language"
                                     placeHolder="ex. Spanish, Italian"/>
                             <Button
+                                style={{color: "#fff", backgroundColor: "#078b75"}}
                                 type="submit"
                                 fullWidth
                                 variant="contained"
-                                color="primary"
                                 className={classes.submit}
                                 onClick={(e) => this.onFormSubmit(e)}
                             >
