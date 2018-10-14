@@ -50,15 +50,6 @@ function DetailedExpansionPanel(props) {
             <ExpansionPanel>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                     <div className={classes.column} style={{display: "flex"}}>
-                        {
-                            ambassador.status === "ACTIVE" ?
-                                <PlayArrow style={{paddingRight: 10}} /> :
-                                ambassador.status === "INACTIVE" ?
-                                    <Stop style={{paddingRight: 10}}/> :
-                                ambassador.status === "PAUSED" ?
-                                    <Pause style={{paddingRight: 10}}/> :
-                                    null
-                        }
                         <Typography className={classes.heading}>{ambassador.firstName} {ambassador.lastName}</Typography>
                     </div>
                     <div className={classes.column}>
