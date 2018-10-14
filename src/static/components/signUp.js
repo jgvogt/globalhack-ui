@@ -68,7 +68,6 @@ static defaultProps = {
         zipCode: "",
         phone: "",
         email: "",
-        status: "ACTIVE",
         gender: "UNSPECIFIED",
         language: [],
         skill: [],
@@ -87,7 +86,6 @@ static defaultProps = {
             postalCode: this.state.postalCode,
             phone: this.state.phone,
             email: this.state.email,
-            status: this.state.status,
             gender: this.state.gender,
             tags: [...this.state.skill.map(i => {return{id:i.id}}), ...this.state.language.map(i => {return{id:i.id}})]
         }
@@ -113,11 +111,8 @@ static defaultProps = {
                 <CssBaseline/>
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
-                        <Avatar className={classes.avatar}>
-                            <FaceIcon/>
-                        </Avatar>
                         <Typography component="h1" variant="h5" style={{textAlign: "center"}}>
-                            Register Ambassador
+                            Ambassador Application
                         </Typography>
                         <form className={classes.form}>
                             <FormControl margin="normal" required fullWidth>
@@ -175,33 +170,23 @@ static defaultProps = {
                                     onChange={(e) => this.handleChange(e, "email")} value={this.state.email}
                                 />
                             </FormControl>
-                            <FormControl className={classes.formControl}>
-                                <InputLabel htmlFor="Status">Status</InputLabel>
-                                <Select
-                                    onChange={(e) => this.handleChange(e, "status")} value={this.state.status}
-                                >
-                                    <MenuItem value={"ACTIVE"}>Active</MenuItem>
-                                    <MenuItem value={"INACTIVE"}>Inactive</MenuItem>
-                                    <MenuItem value={"PAUSED"}>Paused</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <div>
-                            <FormControl className={classes.formControl}>
-                                <InputLabel htmlFor="Gender">Gender</InputLabel>
-                                <Select
-                                    onChange={(e) => this.handleChange(e, "gender")} value={this.state.gender}
-                                >
-                                    <MenuItem value={"MALE"}>Male</MenuItem>
-                                    <MenuItem value={"FEMALE"}>Female</MenuItem>
-                                    <MenuItem value={"UNSPECIFIED"}>Unspecified</MenuItem>
-                                    <MenuItem value={"OTHER"}>Other</MenuItem>
-                                </Select>
-                            </FormControl>
+                            <div style={{paddingTop: "16px"}}>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="Gender">Gender</InputLabel>
+                                    <Select
+                                        onChange={(e) => this.handleChange(e, "gender")} value={this.state.gender}
+                                    >
+                                        <MenuItem value={"MALE"}>Male</MenuItem>
+                                        <MenuItem value={"FEMALE"}>Female</MenuItem>
+                                        <MenuItem value={"UNSPECIFIED"}>Unspecified</MenuItem>
+                                        <MenuItem value={"OTHER"}>Other</MenuItem>
+                                    </Select>
+                                </FormControl>
                             </div>
                             <div></div>
                             <Search onSearch={(query) => this.onTagSearch(query, "skill")} searchType="skill" searchName="Skills"
-                                    placeHolder="ex. legal services"/>
-                            <Search onSearch={(query) => this.onTagSearch(query, "language")} searchType="language" searchName="Language"
+                                    placeHolder="ex. Housing"/>
+                            <Search onSearch={(query) => this.onTagSearch(query, "language")} searchType="language" searchName="Languages"
                                     placeHolder="ex. Spanish, Italian"/>
                             <Button
                                 type="submit"
