@@ -14,7 +14,7 @@ class SearchBar extends PureComponent {
     };
     render() {
         return (
-            <div style={{height: "85px", display: "flex", justifyContent: "space-around", alignContent: "center", backgroundColor: "#DCDCDC"}}>
+            <div style={{height: "85px", display: "flex", justifyContent: "space-around", alignContent: "center", backgroundColor: "#DCDCDC", flexWrap: "wrap"}}>
                 <TextField label="First Name" onChange={(e) => this.props.handleChange(e, "firstName")} margin="normal"/>
                 <TextField label="Last Name" onChange={(e) => this.props.handleChange(e, "lastName")} margin="normal"/>
                 <Search onSearch={this.props.onTagSearch} searchType="skill" searchName="Skills" placeHolder="ex. legal services" />
