@@ -1,4 +1,5 @@
 import React from 'react';
+import {PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -14,6 +15,11 @@ import Search from "./search";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Chip from "@material-ui/core/Chip";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const styles = theme => ({
     layout: {
@@ -76,7 +82,8 @@ static defaultProps = {
         language: [],
         skill: [],
         selectedSkills: [],
-        selectedLanguages: []
+        selectedLanguages: [],
+        submitted: false
     };
 
     search(searchType) {
@@ -108,6 +115,9 @@ static defaultProps = {
 
     onFormSubmit(event) {
         event.preventDefault();
+
+        const submitted = () => this.setState({submitted: true});
+
         const data = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -117,7 +127,6 @@ static defaultProps = {
             gender: this.state.gender,
             tags: [...this.state.selectedSkills.map(i => {return{id:i.id}}), ...this.state.selectedLanguages.map(i => {return{id:i.id}})]
         }
-        //console.log(data);
         fetch('/api/ambassadors', {
             method: 'POST',
             headers: {
@@ -126,14 +135,19 @@ static defaultProps = {
             body: JSON.stringify(
                 data
             )
-        });
-        //console.log("submit");
+        }).then(res => res.json())
+        .then(submitted)
+        .catch(submitted);
     }
     render() {
         const {classes} = this.props;
 
         return (
             <React.Fragment>
+                {this.state.submitted ? 
+                    <Submitted /> : null
+                }
+
                 <CssBaseline/>
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
@@ -159,7 +173,6 @@ static defaultProps = {
                                     id="lastName"
                                     name="lastName"
                                     autoComplete="lastName"
-                                    autoFocus
                                     onChange={(e) => this.handleChange(e, "lastName")} value={this.state.lastName}
                                 />
                             </FormControl>
@@ -293,6 +306,44 @@ static defaultProps = {
             </React.Fragment>
         );
     }
+}
+
+class Submitted extends PureComponent {
+
+  state = {
+    open: true,
+  };
+
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = () => {
+    this.setState({open: false});
+  };
+
+  render() {
+      return (
+          <div>
+            <Dialog
+              open={this.state.open}
+              onClose={this.handleClose}
+            >
+              <DialogTitle id="alert-dialog-title">{"Success"}</DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    Application Submitted
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={this.handleClose} color="primary" autoFocus>
+                    OK
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+      )
+  }
 }
 
 export default withStyles(styles)(SignUp);
