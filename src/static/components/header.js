@@ -5,21 +5,15 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 const Header = () => (
-    <div >
-        <StyledAppBar position="static">
+    <div>
+        <AppBar position="static">
             <Toolbar>
                 <Typography variant="title" color="inherit">
                     Ambassador Connect
                 </Typography>
             </Toolbar>
-        </StyledAppBar>
+        </AppBar>
     </div>
 );
-
-const StyledAppBar = withStyles({
-    root: {
-        backgroundColor: '#078b75'
-    }
-})(AppBar);
 
 export default Header;
