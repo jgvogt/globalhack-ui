@@ -13,6 +13,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Search from "./search";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import Chip from "@material-ui/core/Chip";
 
 const styles = theme => ({
     layout: {
@@ -44,6 +45,9 @@ const styles = theme => ({
     submit: {
         marginTop: theme.spacing.unit * 3,
     },
+    formControl: {
+        width: "100%"
+    }
 });
 
 class SignUp extends React.Component {
@@ -71,11 +75,35 @@ static defaultProps = {
         gender: "UNSPECIFIED",
         language: [],
         skill: [],
-        tags: []
+        selectedSkills: [],
+        selectedLanguages: []
     };
+
+    search(searchType) {
+        //Load search suggestions
+        if(!searchType) return;
+        fetch(`/api/tags/type?type=${searchType}`).then(response => response.json())
+            .then(tags => {
+                this.setState({[searchType] : tags});
+            });
+    }
+
+    handleSkillChange = event => {
+        this.setState({selectedSkills: event.target.value});
+    };
+
+    handleLanguageChange = event => {
+        this.setState({selectedLanguages: event.target.value});
+    };
+
 
     handleChange(e, name) {
         this.setState({[name]: e.target.value});
+    }
+
+    componentWillMount() {
+        this.search('skill');
+        this.search('language');
     }
 
     onFormSubmit(event) {
@@ -87,7 +115,7 @@ static defaultProps = {
             phone: this.state.phone,
             email: this.state.email,
             gender: this.state.gender,
-            tags: [...this.state.skill.map(i => {return{id:i.id}}), ...this.state.language.map(i => {return{id:i.id}})]
+            tags: [...this.state.selectedSkills.map(i => {return{id:i.id}}), ...this.state.selectedLanguages.map(i => {return{id:i.id}})]
         }
         //console.log(data);
         fetch('/api/ambassadors', {
@@ -103,8 +131,6 @@ static defaultProps = {
     }
     render() {
         const {classes} = this.props;
-
-        //console.log(this.state);
 
         return (
             <React.Fragment>
@@ -184,10 +210,73 @@ static defaultProps = {
                                 </FormControl>
                             </div>
                             <div></div>
-                            <Search onSearch={(query) => this.onTagSearch(query, "skill")} searchType="skill" searchName="Skills"
-                                    placeHolder="ex. Housing"/>
-                            <Search onSearch={(query) => this.onTagSearch(query, "language")} searchType="language" searchName="Languages"
-                                    placeHolder="ex. Spanish, Italian"/>
+
+    <div style={{paddingTop: "16px"}}>
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="skills">Skills</InputLabel>
+          <Select
+            multiple
+            value={this.state.selectedSkills}
+            onChange={this.handleSkillChange}
+            input={<Input id="skills" />}
+            renderValue={selected => (
+              <div style={{display: "flex", flexWrap: "wrap"}}>
+                {selected.map(value => (
+                  <Chip
+                    key={value.id}
+                    value={value}
+                    label={value.name}
+                    style={{display: "flex", flexWrap: "wrap"}}
+                  />
+                ))}
+              </div>
+            )}
+          >
+            {this.state.skill.map(i => (
+              <MenuItem
+                key={i.id}
+                value={i}
+              >
+                {i.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+    </div>
+    <div style={{paddingTop: "16px"}}>
+        <FormControl className={classes.formControl}>
+
+          <InputLabel htmlFor="languages">Languages</InputLabel>
+          <Select
+            multiple
+            value={this.state.selectedLanguages}
+            onChange={this.handleLanguageChange}
+            input={<Input id="languages" />}
+            renderValue={selected => (
+              <div style={{display: "flex", flexWrap: "wrap"}}>
+                {selected.map(value => (
+                  <Chip
+                    key={value.id}
+                    value={value}
+                    label={value.name}
+                    style={{display: "flex", flexWrap: "wrap"}}
+                  />
+                ))}
+              </div>
+            )}
+          >
+            {this.state.language.map(i => (
+              <MenuItem
+                key={i.id}
+                value={i}
+              >
+                {i.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+    </div>
+
                             <Button
                                 style={{color: "#fff", backgroundColor: "#078b75"}}
                                 type="submit"
