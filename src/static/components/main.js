@@ -35,13 +35,20 @@ class Search extends PureComponent {
     onNameSearch = () => {
         //ex. http://localhost:8080/api/ambassadors?firstName=Phillip&lastName=Jones
         const {firstName, lastName} = this.state;
-        if(!firstName && !lastName) return;
+        if(!firstName && !lastName) {
+            this.setState({ambassadors: null});
+            return;
+        }
         fetch(`/api/ambassadors?${firstName ? `firstName=${firstName}` : ""}&${lastName ? `lastName=${lastName}` : ""}`).then(response => response.json()).then(ambassadors => this.setState({ambassadors}));
     };
     onTagSearch = query => {
         //ex. http://localhost:8080/api/ambassadors?tags=Apartment&tags=Education
         const queryArray = [];
         query.map(tag => queryArray.push(tag.name));
+        if(!queryArray.length > 0) {
+            this.setState({ambassadors: null});
+            return;
+        }
         fetch(`/api/ambassadors?tags=${queryArray.join("tags=")}`).then(response => response.json()).then(ambassadors => this.setState({ambassadors, firstName: "", lastName: ""}));
     };
     handleChange = (e, name) => {
