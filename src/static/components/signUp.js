@@ -117,7 +117,7 @@ static defaultProps = {
                             <FaceIcon/>
                         </Avatar>
                         <Typography component="h1" variant="h5" style={{textAlign: "center"}}>
-                            Register Ambassador
+                            Ambassador Application
                         </Typography>
                         <form className={classes.form}>
                             <FormControl margin="normal" required fullWidth>
