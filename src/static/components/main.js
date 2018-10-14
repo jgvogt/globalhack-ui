@@ -3,9 +3,10 @@ import Header from "./header";
 import AmbassadorList from "./ambassadorList";
 import SearchBar from "./searchBar";
 import SignUp from "./signUp";
+import Help from "./help";
 import {FormControlLabel, Grid, TextField, Switch} from "@material-ui/core";
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import {MuiThemeProvider, createMuiTheme} from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
     palette: {
@@ -24,6 +25,7 @@ class Main extends PureComponent {
                         <div>
                             <Link to="/" style={{textDecoration: "none"}} ><Header /></Link>
                             <Route exact path="/" component={Menu} />
+                            <Route path="/help" component={Help} />
                             <Route path="/search" component={Search} />
                             <Route path="/register" component={SignUp} />
                         </div>
@@ -81,7 +83,7 @@ class Menu extends PureComponent {
             <div style={{textAlign: "center", paddingTop: "12px"}}>
                 <Grid container spacing={8} style={{maxWidth: "940px", margin: "auto"}}>
                     <Grid item md={4} sm={12} xs={12} >
-                        <Link to="/"><img src="/images/immigrant-help.png" /></Link>
+                        <Link to="/help"><img src="/images/immigrant-help.png" /></Link>
                     </Grid>
                     <Grid item md={4} sm={12} xs={12} >
                         <Link to="/search"><img src="/images/agency-signin.png" /></Link>
