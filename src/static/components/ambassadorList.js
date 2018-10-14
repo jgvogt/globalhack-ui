@@ -19,11 +19,11 @@ class AmbassadorList extends PureComponent {
             <div style={{margin: "20px"}}>
                     <div>
                         <List subheader={
-                            <ListSubheader component="div" style={{display: "flex", backgroundColor: "white"}}>
+                            <ListSubheader component="div" style={{display: "flex", backgroundColor: "white", zIndex: 0}}>
                                 <ListItem>Name</ListItem>
                                 <ListItem>Skills</ListItem>
                                 <ListItem>Languages</ListItem>
-                                <ListItem>Location</ListItem>
+                                <ListItem style={{flexBasis: "60%"}}>Zip Code</ListItem>
                             </ListSubheader>
                         }>
                             <Divider />

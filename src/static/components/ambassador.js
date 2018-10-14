@@ -6,7 +6,7 @@ import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import {PlayArrow, Pause, Stop} from "@material-ui/icons";
-import ReviewDialog from "./reviewDialog"
+import ReviewDialog from "./reviewDialog";
 
 const styles = theme => ({
     root: {
@@ -75,7 +75,7 @@ function DetailedExpansionPanel(props) {
                             })
                         }
                     </div>
-                    <div className={classes.column}>
+                    <div style={{flexBasis: "10%", paddingLeft: 10}}>
                         <Typography className={classes.heading}>{ambassador?.postalCode}</Typography>
                      </div>
                 </ExpansionPanelSummary>
