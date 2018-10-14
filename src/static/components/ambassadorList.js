@@ -19,7 +19,7 @@ class AmbassadorList extends PureComponent {
             <div style={{margin: "20px"}}>
                     <div>
                         <List subheader={
-                            <ListSubheader component="div" style={{display: "flex", backgroundColor: "#FAFAFA"}}>
+                            <ListSubheader component="div" style={{display: "flex", backgroundColor: "white"}}>
                                 <ListItem>Name</ListItem>
                                 <ListItem>Skills</ListItem>
                                 <ListItem>Languages</ListItem>
@@ -28,12 +28,21 @@ class AmbassadorList extends PureComponent {
                         }>
                             <Divider />
                             {
-                                ambassadors?.length > 0 ?
+                                ambassadors === null &&
+                                    <div style={{display: "flex", justifyContent: "center", alignContent: "center", marginTop: 50, color: "darkGray"}}>Search For Ambassadors</div>
+
+                            }
+                            {
+                                ambassadors?.length === 0 &&
+                                    <div style={{display: "flex", justifyContent: "center", alignContent: "center", marginTop: 50, color: "darkGray"}}>No Results Were Found, Search Again</div>
+
+                            }
+                            {
+                                ambassadors?.length > 0 &&
                                     ambassadors?.map(currentAmbassador =>
                                     <ListItem xs={12} sm={6} lg={4} xl={3} key={currentAmbassador.id} >
                                         <Ambassador ambassador={currentAmbassador} />
-                                    </ListItem>) :
-                                    <div style={{display: "flex", justifyContent: "center", alignContent: "center", marginTop: 50, color: "darkGray"}}>No Ambassadors found</div>
+                                    </ListItem>)
                             }
                         </List>
                     </div>
